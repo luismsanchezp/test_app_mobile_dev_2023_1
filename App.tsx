@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,9 +8,15 @@ import {
   Modal,
 } from 'react-native';
 
+import {Form} from './src/components/Form'
+
 function App(): JSX.Element {
-  const [text, onChangeText] = React.useState('Text');
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [text, onChangeText] = useState('Text');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisibleForm, setModalVisibleForm] = useState(false);
+  const newUser = () => { console.log('New User') }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.baseText}>Hello</Text>
@@ -19,20 +25,29 @@ function App(): JSX.Element {
         onChangeText={onChangeText}
         value={text}
       />
+      {/* Button 1 */}
       <Pressable
         onPress={() => setModalVisible(!modalVisible)}
-        onPressIn={() => console.log('Mouse in')}
-        onPressOut={() => console.log('Mouse out')}
         onLongPress={() => console.log('Please release me')}
-        style={({pressed}) => [
-          {
-            backgroundColor: pressed
-              ? 'rgb(23, 39, 176)'
-              : 'rgb(210, 230, 255)',
-          },
-        ]}>
-        <Text>Aceptar</Text>
+        style={styles.btnStyle}>
+        <Text style={styles.btnTxtStyle}>Log in</Text>
       </Pressable>
+      {/* Button 2 */}
+      <Pressable
+        onPress={() => setTimeout(() => {
+          setModalVisible2(true)}, 3000)}
+        style={styles.btnStyle2}>
+        <Text style={styles.btnTxtStyle}>Log in</Text>
+      </Pressable>
+      {/* Button 3 */}
+      <Pressable
+        onPress={() => setModalVisibleForm(true)}
+        style={styles.btnStyle2}>
+        <Text style={styles.btnTxtStyle}>Registration Form</Text>
+      </Pressable>
+      {/* Form */}
+      <Form modalVisibleForm={modalVisibleForm}></Form>
+      {/* Slide window 1 */}
       <Modal animationType="slide" visible={modalVisible}>
         <Text>Ventana Modal</Text>
         <TextInput
@@ -45,6 +60,10 @@ function App(): JSX.Element {
           onChangeText={onChangeText}
           value={text}
         />
+      </Modal>
+      {/* Slide window 2 */}
+      <Modal animationType="fade" visible={modalVisible2}>
+        <Text>Mostrar por 3 segundos</Text>
       </Modal>
     </SafeAreaView>
   );
@@ -73,6 +92,26 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  btnStyle: {
+    backgroundColor: '#2437DA',
+    padding: 20,
+    marginTop: 20,
+    marginHorizontal: 10,
+    borderRadius: 10,
+  },
+  btnTxtStyle: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 25,
+    textTransform: 'capitalize',
+  },
+  btnStyle2: {
+    backgroundColor: '#EA4918',
+    padding: 20,
+    marginTop: 20,
+    marginHorizontal: 10,
+    borderRadius: 10,
   },
 });
 
