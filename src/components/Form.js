@@ -6,32 +6,23 @@ import {
     StyleSheet, 
     Text, 
     TextInput, 
-    View
+    View,
 } from 'react-native'
 import DatePicker from 'react-native-date-picker';
-import { Picker } from '@react-native-picker/picker';
+import { RadioButton } from 'react-native-paper';
 
 export const Form = ({modalVisibleForm}) => {
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
+    const [userName, setUserName] = useState('Your Name');
+    const [userSurname, setUserSurname] = useState('Your Surname');
+    const [userEmail, setUserEmail] = useState('name@email.com');
     const [dateBirth, setDateBirth] = useState(new Date());
-    const [userAge, setUserAge] = useState(0);
-
-    const fillRange = (start, end) => {
-        return Array(end - start + 1).fill().map((item, index) => start + index);
-    };
-
-    const ages = fillRange(13, 100);
-    const renderAgeList = () => {
-        return ages.map((ageNum) => {
-            return <Picker.Item label={ageNum.toString()} value={ageNum} />
-        })
-    }
+    const [userGender, setUserGender] = useState('F');
     
     console.log('userName: ', userName);
+    console.log('userSurname: ', userSurname);
     console.log('userEmail: ', userEmail);
     console.log('dateBirth: ', dateBirth);
-    console.log('userAge: ', userAge);
+    console.log('userGender: ', userGender);
 
     return (
         <Modal animationType='slide' visible={modalVisibleForm}>
@@ -39,11 +30,9 @@ export const Form = ({modalVisibleForm}) => {
                 <ScrollView>
                     <Text style={styles.formTitle}>Form</Text>
                     <View>
-                        <Text
-                            style={styles.textTitle}
+                        <Text style={styles.textTitle}
                         >Name</Text>
                         <TextInput
-                            placeholder='Your Name'
                             placeholderTextColor={'#203474'}
                             autoCapitalize='words'
                             autoCorrect={false}
@@ -51,19 +40,33 @@ export const Form = ({modalVisibleForm}) => {
                             onChangeText={setUserName}
                             style={styles.textBox}
                         ></TextInput>
-                        <Text
-                            style={styles.textTitle}
-                        >Email</Text>
+                        <Text style={styles.textTitle}
+                        >Surname</Text>
                         <TextInput
-                            placeholder='name@email.com'
                             placeholderTextColor={'#203474'}
-                            autoCapitalize='none'
+                            autoCapitalize='words'
                             autoCorrect={false}
-                            autoCompleteType='email'
-                            value={userEmail}
-                            onChangeText={setUserEmail}
+                            value={userSurname}
+                            onChangeText={setUserSurname}
                             style={styles.textBox}
                         ></TextInput>
+                        <View
+                            style={styles.containerGender}
+                        >
+                            <Text
+                                style={styles.textTitle}
+                            >Gender</Text>
+                            <RadioButton
+                                value="Female"
+                                status={ userGender === 'F' ? 'checked' : 'unchecked' }
+                                onPress={() => setUserGender('F')}
+                            />
+                            <RadioButton
+                                value="Male"
+                                status={ userGender === 'M' ? 'checked' : 'unchecked' }
+                                onPress={() => setUserGender('M')}
+                            />
+                        </View>
                         <Text
                             style={styles.textTitle}
                         >Birth Date</Text>
@@ -75,17 +78,29 @@ export const Form = ({modalVisibleForm}) => {
                             maximumDate={new Date()}
                             onDateChange={setDateBirth}
                         />
-                        <Text
-                            style={styles.textTitle}
-                        >Age</Text>
-                        <Picker
-                        selectedValue={userAge}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setUserAge(itemValue)
-                        }
+                        <Text style={styles.textTitle}
+                        >Email</Text>
+                        <TextInput
+                            placeholderTextColor={'#203474'}
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            autoCompleteType='email'
+                            value={userEmail}
+                            onChangeText={setUserEmail}
+                            style={styles.textBox}
+                        ></TextInput>
+                        <View
+                            style={styles.containerButtons}
                         >
-                            {renderAgeList()}
-                        </Picker>
+                            <Pressable
+                                style={styles.btnStyle2}>
+                                <Text style={styles.btnTxtStyle}>Aceptar</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.btnStyle2}>
+                                <Text style={styles.btnTxtStyle}>Cancelar</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -98,6 +113,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginHorizontal: 16,
+    },
+    containerGender: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    containerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     formTitle: {
         fontSize: 40,
@@ -115,5 +140,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 20,
+    },
+    btnStyle2: {
+        backgroundColor: '#EA4918',
+        padding: 20,
+        marginTop: 20,
+        marginHorizontal: 10,
+        borderRadius: 10,
     },
 });
