@@ -7,17 +7,55 @@ import {
     Text, 
     TextInput, 
     View,
-    Pressable
+    Pressable,
+    Alert
 } from 'react-native'
-import DatePicker from 'react-native-modern-datepicker';
+import DatePicker from 'react-native-date-picker';
 import { RadioButton } from 'react-native-paper';
 
-export const Form = ({modalVisibleForm}) => {
+export const Form = ({modalVisibleForm, setModalVisibleForm}) => {
     const [userName, setUserName] = useState('');
     const [userSurname, setUserSurname] = useState('');
     const [userEmail, setUserEmail] = useState('');
-    const [dateBirth, setDateBirth] = useState('');
+    const [dateBirth, setDateBirth] = useState(new Date());
     const [userGender, setUserGender] = useState('');
+
+    const handlerNewUser = () => {
+        if([userName, userSurname, userEmail, dateBirth, userGender].includes('')){
+            console.log('Error: Empty fields');
+            Alert.alert(
+                'Error',
+                'Empty fields',
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => console.log('OK Pressed'),
+                        style: 'cancel',
+                    },
+                ],
+                { cancelable: false }
+            );
+        } else {
+            const newUser = {
+                name: userName,
+                surname: userSurname,
+                email: userEmail,
+                birthDate: dateBirth,
+                userGender: userGender
+            }
+            console.log('New user created: ', newUser);
+            setModalVisibleForm(!modalVisibleForm);
+            cleanFields();
+        }
+    }
+
+    const cleanFields = () => {
+        setUserName('');
+        setUserSurname('');
+        setUserEmail('');
+        setDateBirth(new Date());
+        setUserGender('');
+    }
 
     console.log('userName: ', userName);
     console.log('userSurname: ', userSurname);
@@ -29,9 +67,27 @@ export const Form = ({modalVisibleForm}) => {
         <Modal animationType='slide' visible={modalVisibleForm}>
             <SafeAreaView style={styles.content}>
                 <ScrollView>
+                    {/*Form Title'*/}
                     <Text 
                         style={styles.formTitle}
-                    >Form</Text>
+                    >Sign Up {''}
+                        {/*Form Subtitle'*/}
+                        <Text 
+                            style={styles.textSubtitle}
+                        >User UAM</Text>
+                    </Text>
+                    {/*Close window button*/}
+                    <Pressable
+                        style={styles.exit_window}
+                        onPress={() => {
+                            setModalVisibleForm(!modalVisibleForm);
+                            cleanFields();
+                        }}>
+                        <Text 
+                            style={styles.text_close_window}
+                        >Cancelar</Text>
+                    </Pressable>
+                    {/*Form fields*/}
                     <Text 
                         style={styles.textTitle}
                     >Name</Text>
@@ -54,24 +110,33 @@ export const Form = ({modalVisibleForm}) => {
                         onChangeText={setUserSurname}
                         style={styles.textBox}
                     ></TextInput>
+                    {/*Gender radio buttons*/}
                     <View style={styles.containerGender}>
                         <Text
                             style={styles.textTitle}
                         >Gender</Text>
-                        <View style={styles.containerGenderRadioButtons}>
+                        <View 
+                            style={styles.containerGenderRadioButtons}
+                        >
                             <RadioButton
                                 color='#92b5be'
                                 value="F"
-                                status={ userGender === 'F' ? 'checked' : 'unchecked' }
+                                status={ 
+                                    userGender === 'F' ? 'checked' : 'unchecked' 
+                                }
                                 onPress={() => setUserGender('F')}
                             />
                             <Text>Female</Text>
                         </View>
-                        <View style={styles.containerGenderRadioButtons}>
+                        <View 
+                            style={styles.containerGenderRadioButtons}
+                        >
                             <RadioButton
                                 color='#92b5be'
                                 value="M"
-                                status={ userGender === 'M' ? 'checked' : 'unchecked' }
+                                status={ 
+                                    userGender === 'M' ? 'checked' : 'unchecked' 
+                                }
                                 onPress={() => setUserGender('M')}
                             />
                             <Text>Male</Text>
@@ -80,13 +145,20 @@ export const Form = ({modalVisibleForm}) => {
                     <Text
                         style={styles.textTitle}
                     >Birth Date</Text>
-                    <DatePicker
-                        options={styles.datePicker}
-                        minimumDate='1900/01/01'
-                        mode='calendar'
-                        onSelectedChange={date => setDateBirth(date)}
-                    />
-                    <Text style={styles.textTitle}
+                    <View 
+                        style={styles.datePicker}
+                    >
+                        <DatePicker
+                            locale='en_US'
+                            mode='date'
+                            date={dateBirth}
+                            minimumDate={new Date(1900, 0, 1)}
+                            maximumDate={new Date()}
+                            onDateChange={setDateBirth}
+                        />
+                    </View>
+                    <Text 
+                        style={styles.textTitle}
                     >Email</Text>
                     <TextInput
                         placeholder='name@email.com'
@@ -97,14 +169,16 @@ export const Form = ({modalVisibleForm}) => {
                         onChangeText={setUserEmail}
                         style={styles.textBox}
                     ></TextInput>
-                    <View style={styles.containerButtons}>
+                    <View 
+                        style={styles.containerButtons}
+                    >
                         <Pressable
-                            style={styles.btnStyle2}>
-                            <Text style={styles.btnTxtStyle}>Aceptar</Text>
-                        </Pressable>
-                        <Pressable
-                            style={styles.btnStyle2}>
-                            <Text style={styles.btnTxtStyle}>Cancelar</Text>
+                            style={styles.btnCreateUser}
+                            onPress={handlerNewUser}
+                        >
+                            <Text 
+                                style={styles.btnTextCreateUser}
+                            >Create user</Text>
                         </Pressable>
                     </View>
                 </ScrollView>
@@ -120,6 +194,20 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginTop: 20,
         marginBottom: 20,
+    },
+    exit_window: {
+        marginVertical: 10,
+        marginHorizontal: 30,
+        backgroundColor: '#92b5be',
+        borderRadius: 10,
+        padding: 15,
+    },
+    text_close_window: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textTransform: 'uppercase',
     },
     containerGender: {
         flexDirection: 'row',
@@ -149,6 +237,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
     },
+    textSubtitle: {
+        color: '#92b5be',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
     textBox: {
         borderColor: '#92b5be',
         borderWidth: 1,
@@ -156,21 +250,25 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 20,
     },
-    btnStyle2: {
+    btnCreateUser: {
         backgroundColor: '#92b5be',
         padding: 15,
         marginHorizontal: 10,
+        marginVertical: 10,
         borderRadius: 10,
         width: 120,
     },
-    btnTxtStyle: {
+    btnTextCreateUser: {
         textAlign: 'center',
         color: '#fff',
         fontWeight: 'bold',
         textTransform: 'capitalize',
     },
     datePicker: {
-        selectedTextColor: '#fff',
-        mainColor: '#92b5be',
+        alignItems: 'center',
+        marginBottom: 20,
+        borderColor: '#92b5be',
+        borderWidth: 1,
+        borderRadius: 10,
     },
 });

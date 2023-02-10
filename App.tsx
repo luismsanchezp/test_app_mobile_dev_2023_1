@@ -46,7 +46,7 @@ function App(): JSX.Element {
         <Text style={styles.btnTxtStyle}>Registration Form</Text>
       </Pressable>
       {/* Form */}
-      <Form modalVisibleForm={modalVisibleForm}></Form>
+      <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm}></Form>
       {/* Slide window 1 */}
       <Modal animationType="slide" visible={modalVisible}>
         <Text>Ventana Modal</Text>
