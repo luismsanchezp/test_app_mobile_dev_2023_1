@@ -15,8 +15,6 @@ function App(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisibleForm, setModalVisibleForm] = useState(false);
-  const newUser = () => { console.log('New User') }
-
   const [usersList, setUsersList] = useState([]);
 
   return (
@@ -30,7 +28,7 @@ function App(): JSX.Element {
       {/* Button 1 */}
       <Pressable
         onPress={() => setModalVisible(!modalVisible)}
-        onLongPress={() => console.log('Please release me')}
+        onLongPress={() => console.debug('Users List: ', usersList)}
         style={styles.btnStyle}>
         <Text style={styles.btnTxtStyle}>Log in</Text>
       </Pressable>
@@ -70,10 +68,6 @@ function App(): JSX.Element {
     </SafeAreaView>
   );
 }
-
-/* const onPressFunction = () => {
-  console.log('Click');
-}; */
 
 const styles = StyleSheet.create({
   container: {

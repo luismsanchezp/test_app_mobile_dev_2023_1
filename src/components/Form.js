@@ -24,44 +24,38 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
 
     const handlerNewUser = () => {
         if([userName, userSurname, userEmail, dateBirth, userGender].includes('')){
-            console.log('Error: Empty fields');
+            console.debug('Error: Empty fields');
             Alert.alert(
                 'Error',
                 'Empty fields',
                 [
                     {
                         text: 'Accept',
-                        onPress: () => console.log('OK Pressed'),
+                        onPress: () => console.debug('OK Pressed'),
                     },
                 ]);
             return;
         } else {
             const new_user = {
-                id: require('crypto').randomBytes(16).toString('base64'),
+                id: userId,
                 name: userName,
                 surname: userSurname,
                 email: userEmail,
                 birthDate: dateBirth,
                 gender: userGender
             };
-            setUsersList(usersList.map())
-            gotcha = usersList.find(x => x.userEmail == userEmail);
+            gotcha = usersList.find(x => x.email == userEmail);
             if (gotcha === undefined) {
-                console.error("Cannot find user with email: ", userEmail);
+                console.debug("User not found. Creating new user...");
                 usersList.push(new_user);
             } else {
-                gotcha.email = userEmail;
+                setUsersList(usersList.map(x => x.email == userEmail ? new_user : x))
             }
-            console.log('New user created: ', new_user);
             setModalVisibleForm(!modalVisibleForm);
             cleanFields();
         }
     }
-
-    /* Validar un nuevo usuario o es existente */
-
-
-
+    
     const cleanFields = () => {
         setUserName('');
         setUserSurname('');
@@ -69,12 +63,6 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
         setDateBirth(new Date());
         setUserGender('');
     }
-
-    console.log('userName: ', userName);
-    console.log('userSurname: ', userSurname);
-    console.log('userEmail: ', userEmail);
-    console.log('dateBirth: ', dateBirth);
-    console.log('userGender: ', userGender);
 
     return (
         <Modal animationType='slide' visible={modalVisibleForm}>
