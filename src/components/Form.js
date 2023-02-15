@@ -13,7 +13,9 @@ import {
 import DatePicker from 'react-native-date-picker';
 import { RadioButton } from 'react-native-paper';
 
-export const Form = ({modalVisibleForm, setModalVisibleForm}) => {
+export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsersList}) => {
+    
+    const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
     const [userSurname, setUserSurname] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -28,26 +30,37 @@ export const Form = ({modalVisibleForm, setModalVisibleForm}) => {
                 'Empty fields',
                 [
                     {
-                        text: 'OK',
+                        text: 'Accept',
                         onPress: () => console.log('OK Pressed'),
-                        style: 'cancel',
                     },
-                ],
-                { cancelable: false }
-            );
+                ]);
+            return;
         } else {
-            const newUser = {
+            const new_user = {
+                id: require('crypto').randomBytes(16).toString('base64'),
                 name: userName,
                 surname: userSurname,
                 email: userEmail,
                 birthDate: dateBirth,
-                userGender: userGender
+                gender: userGender
+            };
+            setUsersList(usersList.map())
+            gotcha = usersList.find(x => x.userEmail == userEmail);
+            if (gotcha === undefined) {
+                console.error("Cannot find user with email: ", userEmail);
+                usersList.push(new_user);
+            } else {
+                gotcha.email = userEmail;
             }
-            console.log('New user created: ', newUser);
+            console.log('New user created: ', new_user);
             setModalVisibleForm(!modalVisibleForm);
             cleanFields();
         }
     }
+
+    /* Validar un nuevo usuario o es existente */
+
+
 
     const cleanFields = () => {
         setUserName('');

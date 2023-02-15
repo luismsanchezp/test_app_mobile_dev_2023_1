@@ -17,6 +17,8 @@ function App(): JSX.Element {
   const [modalVisibleForm, setModalVisibleForm] = useState(false);
   const newUser = () => { console.log('New User') }
 
+  const [usersList, setUsersList] = useState([]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.baseText}>Hello</Text>
@@ -46,7 +48,7 @@ function App(): JSX.Element {
         <Text style={styles.btnTxtStyle}>Registration Form</Text>
       </Pressable>
       {/* Form */}
-      <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm}></Form>
+      <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm} usersList={usersList} setUsersList={setUsersList}></Form>
       {/* Slide window 1 */}
       <Modal animationType="slide" visible={modalVisible}>
         <Text>Ventana Modal</Text>
