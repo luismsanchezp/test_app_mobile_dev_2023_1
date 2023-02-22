@@ -13,7 +13,6 @@ import {Form} from './src/components/Form'
 function App(): JSX.Element {
   const [text, onChangeText] = useState('Text');
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisibleForm, setModalVisibleForm] = useState(false);
   const [usersList, setUsersList] = useState([]);
 
@@ -25,6 +24,7 @@ function App(): JSX.Element {
         onChangeText={onChangeText}
         value={text}
       />
+
       {/* Button 1 */}
       <Pressable
         onPress={() => setModalVisible(!modalVisible)}
@@ -32,19 +32,14 @@ function App(): JSX.Element {
         style={styles.btnStyle}>
         <Text style={styles.btnTxtStyle}>Log in</Text>
       </Pressable>
-      {/* Button 2 */}
-      <Pressable
-        onPress={() => setTimeout(() => {
-          setModalVisible2(true)}, 3000)}
-        style={styles.btnStyle2}>
-        <Text style={styles.btnTxtStyle}>Log in</Text>
-      </Pressable>
+
       {/* Button 3 */}
       <Pressable
         onPress={() => setModalVisibleForm(true)}
         style={styles.btnStyle2}>
         <Text style={styles.btnTxtStyle}>Registration Form</Text>
       </Pressable>
+
       {/* Form */}
       <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm} usersList={usersList} setUsersList={setUsersList}></Form>
       {/* Slide window 1 */}
@@ -60,10 +55,6 @@ function App(): JSX.Element {
           onChangeText={onChangeText}
           value={text}
         />
-      </Modal>
-      {/* Slide window 2 */}
-      <Modal animationType="fade" visible={modalVisible2}>
-        <Text>Mostrar por 3 segundos</Text>
       </Modal>
     </SafeAreaView>
   );
