@@ -6,9 +6,11 @@ import {
   TextInput,
   Pressable,
   Modal,
+  FlatList,
 } from 'react-native';
 
 import {Form} from './src/components/Form'
+import {User} from './src/components/User'
 
 function App(): JSX.Element {
   const [text, onChangeText] = useState('Text');
@@ -42,6 +44,17 @@ function App(): JSX.Element {
 
       {/* Form */}
       <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm} usersList={usersList} setUsersList={setUsersList}></Form>
+      {usersList.length === 0 ? (
+        <Text>No hay usuarios</Text>
+      ) : <FlatList 
+            data={usersList}
+            renderItem={({item}) => {
+              return (<User 
+                user_item={item}
+                
+              ></User>)
+            }}
+            />}
       {/* Slide window 1 */}
       <Modal animationType="slide" visible={modalVisible}>
         <Text>Ventana Modal</Text>

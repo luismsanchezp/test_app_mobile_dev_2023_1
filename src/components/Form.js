@@ -47,6 +47,7 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
             gotcha = usersList.find(x => x.email == userEmail);
             if (gotcha === undefined) {
                 console.debug("User not found. Creating new user...");
+                new_user.id = 'no-id'
                 usersList.push(new_user);
             } else {
                 setUsersList(usersList.map(x => x.email == userEmail ? new_user : x))
