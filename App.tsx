@@ -11,12 +11,14 @@ import {
 
 import {Form} from './src/components/Form'
 import {User} from './src/components/User'
+import { Superhero } from './src/components/Superhero';
 
 function App(): JSX.Element {
   const [text, onChangeText] = useState('Text');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleForm, setModalVisibleForm] = useState(false);
   const [usersList, setUsersList] = useState([]);
+  const [superHeroVisible, setSuperHeroVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,9 +44,17 @@ function App(): JSX.Element {
         <Text style={styles.btnTxtStyle}>Registration Form</Text>
       </Pressable>
 
+      <Pressable
+        onPress={() => setSuperHeroVisible(true)}
+        style={styles.btnStyle2}>
+        <Text style={styles.btnTxtStyle}>Super Hero</Text>
+      </Pressable>
+
+      <Superhero superHeroVisible={superHeroVisible} setSuperHeroVisible={setSuperHeroVisible}></Superhero>
+
       {/* Form */}
       <Form modalVisibleForm={modalVisibleForm} setModalVisibleForm={setModalVisibleForm} usersList={usersList} setUsersList={setUsersList}></Form>
-      {usersList.length === 0 ? (
+      {/* {usersList.length === 0 ? (
         <Text>No hay usuarios</Text>
       ) : <FlatList 
             data={usersList}
@@ -54,7 +64,7 @@ function App(): JSX.Element {
                 
               ></User>)
             }}
-            />}
+            />} */}
       {/* Slide window 1 */}
       <Modal animationType="slide" visible={modalVisible}>
         <Text>Ventana Modal</Text>
