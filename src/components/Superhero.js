@@ -10,7 +10,7 @@ export const Superhero = ({superHeroVisible, setSuperHeroVisible}) => {
             <View style={styles.view_elements}>
             
               <Title style={styles.title}>Super Hero</Title>
-              <Image style={styles.logo} source={require('./logo.png')}></Image>
+              <Image style={styles.logo} source={require('../assets/PNG/logo.png')}></Image>
               <Pressable
                   style={styles.exit_window}
                   onPress={() => {
