@@ -1,31 +1,36 @@
 import React from 'react';
-import {Image, Modal, SafeAreaView, StyleSheet, View, ScrollView, Pressable, Text} from 'react-native';
-import { Title } from 'react-native-paper';
+import {
+  Image, 
+  Modal, 
+  SafeAreaView, 
+  StyleSheet, 
+  View,
+  Pressable, 
+  Text
+} from 'react-native';
 
 export const Superhero = ({superHeroVisible, setSuperHeroVisible}) => {
   return (
-    <Modal animationType='slide' style={styles.view} visible={superHeroVisible}>
-      <SafeAreaView style={styles.content}>
-        <ScrollView>
-            <View style={styles.view_elements}>
-            
-              <Title style={styles.title}>Super Hero</Title>
-              <Image style={styles.logo} source={require('../assets/PNG/logo.png')}></Image>
-              <Pressable
-                  style={styles.exit_window}
-                  onPress={() => {
-                      setSuperHeroVisible(!superHeroVisible);
-                  }}>
-                  <Text 
-                      style={styles.text_close_window}
-                  >Close</Text>
-              </Pressable>
-            </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Modal>
+    <SafeAreaView>
+      <Modal animationType='slide' style={styles.view} visible={superHeroVisible}>
+        <View style={styles.view_elements}>
+          <Text style={styles.title}>Super Hero</Text>
+          <Image style={styles.logo} source={require('../assets/PNG/logo.png')}></Image>
+          <Pressable
+              style={styles.exit_window}
+              onPress={() => {
+                  setSuperHeroVisible(!superHeroVisible);
+              }}>
+              <Text 
+                  style={styles.text_close_window}
+              >Close</Text>
+          </Pressable>
+        </View>
+      </Modal>
+    </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   content: {
@@ -53,12 +58,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(13,84,146)',
     borderRadius: 10,
     padding: 15,
-},
-text_close_window: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 16,
-    textTransform: 'uppercase',
-},
+  },
+  text_close_window: {
+      color: '#fff',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: 16,
+      textTransform: 'uppercase',
+  },
 });
+

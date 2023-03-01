@@ -12,6 +12,7 @@ import {
 import {Form} from './src/components/Form'
 import {User} from './src/components/User'
 import { Superhero } from './src/components/Superhero';
+import { Formpractice} from './src/components/Formpractice';
 
 function App(): JSX.Element {
   const [text, onChangeText] = useState('Text');
@@ -19,6 +20,7 @@ function App(): JSX.Element {
   const [modalVisibleForm, setModalVisibleForm] = useState(false);
   const [usersList, setUsersList] = useState([]);
   const [superHeroVisible, setSuperHeroVisible] = useState(false);
+  const [formPracticeVisible, setFormPracticeVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,12 +45,20 @@ function App(): JSX.Element {
         style={styles.btnStyle2}>
         <Text style={styles.btnTxtStyle}>Registration Form</Text>
       </Pressable>
-
       <Pressable
         onPress={() => setSuperHeroVisible(true)}
         style={styles.btnStyle2}>
         <Text style={styles.btnTxtStyle}>Super Hero</Text>
       </Pressable>
+      
+      <Pressable
+        onPress={() => setFormPracticeVisible(true)}
+        style={styles.btnStyle2}>
+        <Text style={styles.btnTxtStyle}>Form Practice</Text>
+      </Pressable>
+
+      {/* Form Practice */}
+      <Formpractice formPracticeVisible={formPracticeVisible} setFormPracticeVisible={setFormPracticeVisible}></Formpractice>
 
       <Superhero superHeroVisible={superHeroVisible} setSuperHeroVisible={setSuperHeroVisible}></Superhero>
 
