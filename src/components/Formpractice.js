@@ -12,7 +12,8 @@ import {
 
 export const Formpractice = ({formPracticeVisible, setFormPracticeVisible}) => {
 
-    const [value, setValue] = useState("Name");
+    const [nameValue, setNameValue] = useState("");
+    const [emailValue, setEmailValue] = useState("");
 
     const capturarValor = (value) => {
         console.log(value);
@@ -30,7 +31,18 @@ export const Formpractice = ({formPracticeVisible, setFormPracticeVisible}) => {
                         <TextInput 
                             style={styles.text_font}
                             editable
-                            placeholder={value}
+                            value={nameValue}
+                            placeholder="Your Name"
+                            placeholderTextColor="lightgray"
+                            onChangeText={capturarValor}/>
+                    </View>
+                    <View style={styles.container}>
+                        <Text style={styles.text_input_title}>Email</Text>
+                        <TextInput 
+                            style={styles.text_font}
+                            editable
+                            value={emailValue}
+                            placeholder="Your Email"
                             placeholderTextColor="lightgray"
                             onChangeText={capturarValor}/>
                     </View>

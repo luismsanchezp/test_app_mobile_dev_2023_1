@@ -98,7 +98,10 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                         autoCapitalize='words'
                         autoCorrect={false}
                         value={userName}
-                        onChangeText={setUserName}
+                        onChangeText={(text) => {
+                            setUserName(text);
+                            console.debug('Name: ' + text);
+                        }}
                         style={styles.textBox}
                     ></TextInput>
                     <Text 
@@ -109,7 +112,10 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                         autoCapitalize='words'
                         autoCorrect={false}
                         value={userSurname}
-                        onChangeText={setUserSurname}
+                        onChangeText={(text) => {
+                            setUserSurname(text);
+                            console.debug('Surname: ' + text);
+                        }}
                         style={styles.textBox}
                     ></TextInput>
                     {/*Gender radio buttons*/}
@@ -126,7 +132,10 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                                 status={ 
                                     userGender === 'F' ? 'checked' : 'unchecked' 
                                 }
-                                onPress={() => setUserGender('F')}
+                                onPress={() => {
+                                    setUserGender('F');
+                                    console.debug('Gender: ', userGender);
+                                }}
                             />
                             <Text>Female</Text>
                         </View>
@@ -139,7 +148,10 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                                 status={ 
                                     userGender === 'M' ? 'checked' : 'unchecked' 
                                 }
-                                onPress={() => setUserGender('M')}
+                                onPress={() => {
+                                    setUserGender('M');
+                                    console.debug('Gender: ', userGender);
+                                }}
                             />
                             <Text>Male</Text>
                         </View>
@@ -156,7 +168,11 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                             date={dateBirth}
                             minimumDate={new Date(1900, 0, 1)}
                             maximumDate={new Date()}
-                            onDateChange={setDateBirth}
+                            onDateChange={(date) => {
+                                    setDateBirth(date);
+                                    console.debug('Birth Date: ' + date);
+                                }
+                            }
                         />
                     </View>
                     <Text 
@@ -168,7 +184,12 @@ export const Form = ({modalVisibleForm, setModalVisibleForm, usersList, setUsers
                         autoCorrect={false}
                         autoCompleteType='email'
                         value={userEmail}
-                        onChangeText={setUserEmail}
+                        onChangeText={
+                            (text) => {
+                                setUserEmail(text);
+                                console.debug('Email: ' + text);
+                            }
+                        }
                         style={styles.textBox}
                     ></TextInput>
                     <View 

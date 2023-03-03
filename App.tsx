@@ -21,6 +21,7 @@ function App(): JSX.Element {
   const [usersList, setUsersList] = useState([]);
   const [superHeroVisible, setSuperHeroVisible] = useState(false);
   const [formPracticeVisible, setFormPracticeVisible] = useState(false);
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +44,7 @@ function App(): JSX.Element {
       <Pressable
         onPress={() => setModalVisibleForm(true)}
         style={styles.btnStyle2}>
-        <Text style={styles.btnTxtStyle}>Registration Form</Text>
+        <Text style={styles.btnTxtStyle}>User Registration</Text>
       </Pressable>
       <Pressable
         onPress={() => setSuperHeroVisible(true)}
